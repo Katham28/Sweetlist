@@ -1,0 +1,250 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", sans-serif;
+    line-height: 1.7em;
+    color: #444;
+    background: linear-gradient(to bottom, #ffe4ec, #fff0f5);
+    padding-top: 80px; 
+}
+
+#container{
+    max-width: 900px;
+    margin: 20px auto;
+    border-radius: 25px;
+
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
+    padding: 20px;
+}
+
+#banner{
+    padding: 30px 20px;
+    background: linear-gradient(45deg, #ff7eb3, #ff4f8b);
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+#banner::before{
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+    transform: rotate(25deg);
+}
+
+#banner h1{
+    margin: 0;
+    font-size: 50px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+}
+
+#mini_banner{
+    padding: 12px 20px;
+    background: linear-gradient(45deg, #ffadd0, #ff7eb3);
+    color: white;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.25);
+}
+
+#mini_banner h1{
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+#mini_page,
+#s_create,
+#s_delete,
+#s_update,
+#s_search,
+#s_report{
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
+}
+
+
+
+
+/* Inputs */
+input[type="password"],input[type="text"],
+select,
+textarea{
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px 0;
+    border: 2px solid #ffd1e1;
+    border-radius: 15px;
+    font-size: 14px;
+    background: #fff8fb;
+}
+
+input[type="date"]{
+    padding: 10px;
+    margin: 8px 0 15px 0;
+    border: 2px solid #ffd1e1;
+    border-radius: 15px;
+    font-size: 14px;
+    background: #fff8fb;
+    color: #444;
+    box-shadow: inset 0 2px 5px rgba(255, 105, 180, 0.1);
+}
+
+input[type="date"]:focus{
+    outline: none;
+    border-color: #ff4f8b;
+    box-shadow: 0 0 8px rgba(255, 105, 180, 0.4);
+}
+
+button,
+.button{
+    background: linear-gradient(45deg, #ff7eb3, #ff4f8b);
+    border: none;
+    color: white;
+    padding: 10px 40px;
+    border-radius: 25px;
+    font-size: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+}
+
+button:hover{
+    transform: scale(1.05);
+}
+
+.s_table {
+    border-collapse: separate; /* permite separación visual */
+    border-spacing: 0;
+    font-size: 14px;
+    width: 100%;
+    overflow-x: auto;
+
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+
+.s_table th {
+    background: linear-gradient(45deg, #ff7eb3, #ff4f8b);
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+
+.s_table td {
+    border-bottom: 1px solid #ffe4ec;
+    color: #555;
+}
+
+/* Filas alternadas */
+.s_table tr:nth-child(even) {
+    background-color: #fff5f9;
+}
+
+
+
+
+
+/* Bordes redondeados arriba */
+.s_table th:first-child {
+    border-top-left-radius: 15px;
+}
+.s_table th:last-child {
+    border-top-right-radius: 15px;
+}
+
+input[type="radio"]{
+    accent-color: #ff4f8b;
+}
+
+
+
+.section-title{
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #ff4f8b;
+}
+
+.checkbox-group{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #fff8fb;
+    padding: 10px 15px;
+    border-radius: 15px;
+    border: 2px solid #ffd1e1;
+}
+
+.radio-group{
+    display: flex;
+    gap: 10px;
+    background: #fff8fb;
+    padding: 10px 15px;
+    border-radius: 15px;
+    border: 2px solid #ffd1e1;
+}
+
+.checkbox-item input[type="checkbox"]{
+    accent-color: #ff4f8b;
+    width: 18px;
+    height: 18px;
+}
+
+.girly-alert{
+    background: linear-gradient(45deg, #ff7eb3, #ff4f8b);
+    color: white;
+    border-radius: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.girly-navbar{
+    background: linear-gradient(45deg, #ff7eb3, #ff4f8b);
+    color: white;
+    border: none;
+
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+font-size: 20px;
+margin-button: 10px;
+}
+
+.girly-navbar .nav-link {
+    color: white !important;
+}
+
+
+.carousel {
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+.carousel-inner {
+    max-width: 100%;
+    overflow: hidden;
+}
+.carousel-image {
+    width: 100%; 
+    height: 300px; 
+    object-fit: cover; 
+    object-position: center; 
+}
+
