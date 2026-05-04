@@ -1,0 +1,27 @@
+INSERT INTO tags (Username, color, details, name) VALUES
+('default', '#FF0000', 'Tareas urgentes o críticas', 'Urgente'),
+('default', '#007BFF', 'Actividades relacionadas al trabajo', 'Trabajo'),
+('default', '#28A745', 'Tareas personales o del hogar', 'Personal'),
+('default', '#FFC107', 'Pendientes de estudio o aprendizaje', 'Estudio'),
+('default', '#6F42C1', 'Recordatorios o tareas opcionales', 'Opcional');
+
+
+
+INSERT INTO lists (Username, icon, notes, name) VALUES
+('default', 'list.png', 'Lista general de tareas', 'General'),
+('default', 'work.png', 'Pendientes relacionados al trabajo', 'Trabajo'),
+('default', 'home.png', 'Tareas del hogar', 'Hogar'),
+('default', 'study.png', 'Estudio y aprendizaje', 'Estudio'),
+('default', 'shopping.png', 'Compras y mandados', 'Compras');
+
+INSERT INTO tasks (Username, tittle, description, due_date, tag, list) VALUES
+('po', 'Reunión de equipo',      'Preparar presentación trimestral',  '2026-05-10', 'Urgente',  'Trabajo'),
+('po', 'Comprar despensa',       'Leche, huevos, fruta y verduras',   '2026-05-05', 'Personal', 'Compras'),
+('po', 'Leer capítulo 3',        'Libro de algoritmos',               '2026-05-08', 'Estudio',  'Estudio'),
+('po', 'Limpiar cocina',         'Incluir horno y refrigerador',      '2026-05-06', 'Personal', 'Hogar'),
+('po', 'Entregar reporte',       'Reporte mensual de ventas',         '2026-05-07', 'Urgente',  'Trabajo'),
+('po', 'Pagar servicios',        'Luz, agua e internet',              '2026-05-09', 'Opcional', 'General'),
+('po', 'Estudiar para examen',   'Matemáticas discretas unidad 2',    '2026-05-12', 'Estudio',  'Estudio'),
+('po', 'Llamar al plomero',      'Fuga en el baño principal',         '2026-05-05', 'Urgente',  'Hogar'),
+('po', 'Comprar útiles',         'Cuaderno y plumas para el curso',   '2026-05-11', 'Estudio',  'Compras'),
+('po', 'Revisar correos',        'Responder pendientes de la semana', '2026-05-04', 'Trabajo',  'General');

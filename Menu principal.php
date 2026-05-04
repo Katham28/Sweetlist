@@ -14,6 +14,8 @@ if (isset($_SESSION["authenticated"])) {
 }
 
 $_SESSION["LoginError"] = false;
+
+include 'Menu principal_configuration_process.php';
 ?>
 
 <!doctype html>
@@ -32,20 +34,7 @@ $_SESSION["LoginError"] = false;
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 </head>
 
-<script>
-//For the modals
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('created') === '1') {
-        const modal = new bootstrap.Modal(document.getElementById('Modal_User_Created'));
-        modal.show();
-        
-        // Limpiar la URL para que no muestre el parámetro
-        const newUrl = window.location.pathname;
-        window.history.replaceState({}, document.title, newUrl);
-    }
-});
-</script>
+
 
 <body>
 
@@ -53,8 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="container-fluid">
 
 	
-	<a class="navbar-brand" href="Pantalla de inicio.php">Log out</a>
-	<a class="navbar-brand" href="Menu principal php">Main Menu</a>
+	<a class="navbar-brand" href="#" data-bs-toggle="modal" data-bs-target="#Modal_login_out">Log out</a>
+	<a class="navbar-brand" href="#Calendar_View">Calendar View</a>
+	<a class="navbar-brand" href="#General_View">General View</a>
 		
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -92,49 +82,86 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </nav>
 
+	<div id="General_View">
+	 
+	 </div>
 
     <div id="banner">
         <h1>Welcome to SweetList, <?php echo $_SESSION['user']; ?>!</h1>
     </div>
+	
+
 
     <div id="mini_banner">
         <h1>General View</h1>
     </div>
+	
+
 	
     <div class="row">
 
         <div class="col-12 col-md-3 mb-3">
             <div class="p-3 girly-fields">
                 <h5>List selection</h5>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="list1">
-                    <label class="form-check-label" for="list1">List 1</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="list2">
-                    <label class="form-check-label" for="list2">List 2</label>
-                </div>
+                <?php if(empty($lists)): ?>
+                    <p class="text-muted">No hay listas</p>
+                <?php else: ?>
+                    <?php foreach($lists as $list): ?>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="list_<?php echo htmlspecialchars($list['name']); ?>" checked>
+                            <label class="form-check-label" for="list_<?php echo htmlspecialchars($list['name']); ?>"><?php echo htmlspecialchars($list['name']); ?></label>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
 
                 <hr>
 
                 <h5>Filter by tag</h5>
-                <select class="form-select form-select-sm">
-                    <option>Tag</option>
-                </select>
+                <?php if(empty($tags)): ?>
+                    <p class="text-muted">No hay tags</p>
+                <?php else: ?>
+                    <?php foreach($tags as $tag): ?>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="tag_<?php echo htmlspecialchars($tag['name']); ?>" checked>
+                            <label class="form-check-label" for="tag_<?php echo htmlspecialchars($tag['name']); ?>"><?php echo htmlspecialchars($tag['name']); ?></label>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
 
         <div class="col-12 col-md-9 mb-3">
             <div class="p-3 girly-fields">
                 <h5>Task View</h5>
-                <div class="border rounded p-3 mb-3">Task 1</div>
-                <div class="border rounded p-3 mb-3">Task 2</div>
+                <?php
+                    $tagColors = [];
+                    foreach($tags as $t) $tagColors[$t['name']] = $t['color'];
+                ?>
+                <?php if(empty($tasks)): ?>
+                    <p class="text-muted">No hay tasks</p>
+                <?php else: ?>
+                    <?php foreach($tasks as $task): ?>
+                        <?php $bgColor = isset($tagColors[$task['tag']]) ? $tagColors[$task['tag']] : '#ffffff'; ?>
+                        <div class="task-item border rounded p-3 mb-3" data-tag="<?php echo htmlspecialchars($task['tag']); ?>" data-list="<?php echo htmlspecialchars($task['list']); ?>" style="background-color: <?php echo $bgColor; ?>33;">
+                            <strong><?php echo htmlspecialchars($task['tittle']); ?></strong>
+                            <?php if($task['description']): ?>
+                                <p class="mb-1"><?php echo htmlspecialchars($task['description']); ?></p>
+                            <?php endif; ?>
+                            <?php if($task['due_date']): ?>
+                                <small class="text-muted"><?php echo htmlspecialchars($task['due_date']); ?></small>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                    <p id="no-coincidencias" class="text-muted" style="display:none;">No hay coincidencias</p>
+                <?php endif; ?>
             </div>
         </div>
 
     </div>
+    </div>
 
-
+	<div id="Calendar_View">
+	 </div>
     <div id="mini_banner">
         <h1>Calendar View</h1>
     </div>
@@ -154,7 +181,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 right: 'next'
             },
             locale: 'en',
-            height: 'auto'
+            height: 'auto',
+            events: <?php
+                $calendarEvents = [];
+                foreach($tasks as $task) {
+                    $color = isset($tagColors[$task['tag']]) ? $tagColors[$task['tag']] : '#cccccc';
+                    $calendarEvents[] = [
+                        'title' => $task['tittle'],
+                        'start' => $task['due_date'],
+                        'color' => $color
+                    ];
+                }
+                echo json_encode($calendarEvents);
+            ?>
         });
         calendar.render();
     });
@@ -163,24 +202,59 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<div class="modal fade" id="Modal_User_Created">
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tagCheckboxes  = document.querySelectorAll('[id^="tag_"]');
+    const listCheckboxes = document.querySelectorAll('[id^="list_"]');
+
+    function filterTasks() {
+        const selectedTags  = Array.from(tagCheckboxes).filter(cb => cb.checked).map(cb => cb.id.replace('tag_', ''));
+        const selectedLists = Array.from(listCheckboxes).filter(cb => cb.checked).map(cb => cb.id.replace('list_', ''));
+
+        let visible = 0;
+
+        document.querySelectorAll('.task-item').forEach(function(task) {
+            const matchesTag  = selectedTags.length  === 0 || selectedTags.includes(task.dataset.tag);
+            const matchesList = selectedLists.length === 0 || selectedLists.includes(task.dataset.list);
+
+            if(matchesTag && matchesList) {
+                task.style.display = '';
+                visible++;
+            } else {
+                task.style.display = 'none';
+            }
+        });
+
+        const noCoincidencias = document.getElementById('no-coincidencias');
+        if(noCoincidencias) {
+            noCoincidencias.style.display = visible === 0 ? '' : 'none';
+        }
+    }
+
+    tagCheckboxes.forEach(cb  => cb.addEventListener('change', filterTasks));
+    listCheckboxes.forEach(cb => cb.addEventListener('change', filterTasks));
+});
+</script>
+
+<div class="modal fade" id="Modal_login_out">
   <div class="modal-dialog">
     <div class="modal-content">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">User CRUD</h4>
+        <h4 class="modal-title">You are about to log out.</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-	User created!!!!
+		Are you sure?
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <a href="User_log_out.php" class="btn btn-danger">Yes</a>
       </div>
 
     </div>
