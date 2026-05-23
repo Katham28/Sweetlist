@@ -108,12 +108,3 @@ function irPantallaCRUD_Usuario() {
 function irPantallaMain() {
 	window.location.href = 'Pantalla de inicio.php';
 }
-
-function irPantallaUser_Creation() {
-	window.location.href = 'User_creation.php';
-}
-
-
-function irPantalla_Tag_menu() {
-	window.location.href = 'Tag_object/Tag_menu.php';
-}

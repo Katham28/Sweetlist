@@ -73,7 +73,7 @@ include 'Menu principal_configuration_process.php';
                 </li>
 				
 				<li class="nav-item">
-                    <a class="nav-link" href="#" onclick="irPantallaMain()">Tags</a>
+                    <a class="nav-link" href="#" onclick="irPantalla_Tag_menu()">Tags</a>
                 </li>
 
 
