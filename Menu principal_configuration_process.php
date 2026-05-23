@@ -37,7 +37,7 @@ if($stmtTags){
 }
 
 $tasks = [];
-$stmtTasks = $conn->prepare("SELECT tittle, tag, list, description, due_date FROM tasks WHERE Username = ?");
+$stmtTasks = $conn->prepare("SELECT id, tittle, tag, list, description, due_date, is_checked FROM tasks WHERE Username = ?");
 if($stmtTasks){
     $stmtTasks->bind_param("s", $currentUser);
     $stmtTasks->execute();

@@ -11,6 +11,20 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$checkStmt = $conn->prepare("SELECT Username FROM users WHERE Username = ?");
+if($checkStmt){
+    $checkStmt->bind_param("s", $_POST["usernameA"]);
+    $checkStmt->execute();
+    $checkStmt->store_result();
+    if($checkStmt->num_rows > 0){
+        $checkStmt->close();
+        $conn->close();
+        header("Location: User_creation.php?error=username");
+        exit();
+    }
+    $checkStmt->close();
+}
+
 $sql = "INSERT INTO users 
 (Name, Second_Name, First_Last_Name, Second_Last_Name, Birthday, Color, Gender, Username, Password, Style, Default_list, Default_tag, Motivational_phrase) 
 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -55,7 +69,7 @@ if($stmt = $conn->prepare($sql)) {
         if($Default_list == 1) include 'User_creation_process_default_list.php';
         if($Default_tag == 1) include 'User_creation_process_default_tags.php';
 
-        header("Location: CRUD_usuarios.html?created=1");
+        header("Location: User_creation.php?created=1");
         exit();
     } else {
         echo "Error: " . $stmt->error;

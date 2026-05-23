@@ -142,14 +142,17 @@ include 'Menu principal_configuration_process.php';
                 <?php else: ?>
                     <?php foreach($tasks as $task): ?>
                         <?php $bgColor = isset($tagColors[$task['tag']]) ? $tagColors[$task['tag']] : '#ffffff'; ?>
-                        <div class="task-item border rounded p-3 mb-3" data-tag="<?php echo htmlspecialchars($task['tag']); ?>" data-list="<?php echo htmlspecialchars($task['list']); ?>" style="background-color: <?php echo $bgColor; ?>33;">
-                            <strong><?php echo htmlspecialchars($task['tittle']); ?></strong>
-                            <?php if($task['description']): ?>
-                                <p class="mb-1"><?php echo htmlspecialchars($task['description']); ?></p>
-                            <?php endif; ?>
-                            <?php if($task['due_date']): ?>
-                                <small class="text-muted"><?php echo htmlspecialchars($task['due_date']); ?></small>
-                            <?php endif; ?>
+                        <div class="task-item border rounded p-3 mb-3 d-flex align-items-start gap-2" data-tag="<?php echo htmlspecialchars($task['tag']); ?>" data-list="<?php echo htmlspecialchars($task['list']); ?>" style="background-color: <?php echo $bgColor; ?>33;">
+                            <input class="form-check-input task-check mt-1" type="checkbox" data-id="<?php echo $task['id']; ?>" <?php if($task['is_checked']): ?>checked<?php endif; ?>>
+                            <div class="task-content <?php if($task['is_checked']): ?>task-done<?php endif; ?>">
+                                <strong><?php echo htmlspecialchars($task['tittle']); ?></strong>
+                                <?php if($task['description']): ?>
+                                    <p class="mb-1"><?php echo htmlspecialchars($task['description']); ?></p>
+                                <?php endif; ?>
+                                <?php if($task['due_date']): ?>
+                                    <small class="text-muted"><?php echo htmlspecialchars($task['due_date']); ?></small>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                     <p id="no-coincidencias" class="text-muted" style="display:none;">No hay coincidencias</p>
@@ -186,11 +189,13 @@ include 'Menu principal_configuration_process.php';
                 $calendarEvents = [];
                 foreach($tasks as $task) {
                     $color = isset($tagColors[$task['tag']]) ? $tagColors[$task['tag']] : '#cccccc';
-                    $calendarEvents[] = [
+                    $event = [
                         'title' => $task['tittle'],
                         'start' => $task['due_date'],
                         'color' => $color
                     ];
+                    if($task['is_checked']) $event['classNames'] = ['task-checked'];
+                    $calendarEvents[] = $event;
                 }
                 echo json_encode($calendarEvents);
             ?>
@@ -233,6 +238,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     tagCheckboxes.forEach(cb  => cb.addEventListener('change', filterTasks));
     listCheckboxes.forEach(cb => cb.addEventListener('change', filterTasks));
+
+    document.querySelectorAll('.task-check').forEach(function(cb) {
+        cb.addEventListener('change', function() {
+            const id         = this.dataset.id;
+            const is_checked = this.checked ? 1 : 0;
+            const content    = this.nextElementSibling;
+
+            content.classList.toggle('task-done', this.checked);
+
+            fetch('Task_check_process.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'id=' + id + '&is_checked=' + is_checked
+            });
+        });
+    });
 });
 </script>
 

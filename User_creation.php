@@ -57,6 +57,18 @@ document.addEventListener('DOMContentLoaded', function() {
         <h1>SweetList</h1>
     </div>
 
+    <?php if(isset($_GET['created']) && $_GET['created'] == 1): ?>
+        <div class="girly-alert">
+            User created successfully!
+        </div>
+    <?php endif; ?>
+
+    <?php if(isset($_GET['error']) && $_GET['error'] == 'username'): ?>
+        <div class="girly-alert" style="background: linear-gradient(45deg, #ff4f4f, #cc0000);">
+            Username already taken, please choose another one!
+        </div>
+    <?php endif; ?>
+
    <form action="User_creation_process.php" method="POST">
 
 <div id="s_create">
