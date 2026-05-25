@@ -23,6 +23,10 @@ include 'Menu principal_configuration_process.php';
 <head>
     <title>Main menu</title>
     <link rel="stylesheet" href="p1.css">
+    <style>
+        #banner { background: linear-gradient(45deg, #ff4f8b, <?php echo $userColor; ?>) !important; color: <?php echo $navTextColor; ?>; }
+        .task-item { border-left: 4px solid <?php echo $userColor; ?> !important; }
+    </style>
     <script src="p1.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,9 +60,6 @@ include 'Menu principal_configuration_process.php';
 
 
 				
-				<li class="nav-item">
-                <a class="nav-link" href="#" onclick="irPantalla_Calendar_menu()">Calendar</a>
-                </li>
 
 				<li class="nav-item">
                     <a class="nav-link" href="#" onclick="irPantalla_User_menu()">User</a>
@@ -177,7 +178,8 @@ include 'Menu principal_configuration_process.php';
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
+            initialView: '<?php echo $calendarView; ?>',
+            firstDay: <?php echo $calendarFirstDay; ?>,
             headerToolbar: {
                 left: 'prev',
                 center: 'title',
@@ -190,9 +192,11 @@ include 'Menu principal_configuration_process.php';
                 foreach($tasks as $task) {
                     $color = isset($tagColors[$task['tag']]) ? $tagColors[$task['tag']] : '#cccccc';
                     $calendarEvents[] = [
-                        'title' => $task['tittle'],
-                        'start' => $task['due_date'],
-                        'color' => $color
+                        'title'           => $task['tittle'],
+                        'start'           => $task['due_date'],
+                        'backgroundColor' => $color . '33',
+                        'borderColor'     => $color,
+                        'textColor'       => '#333333'
                     ];
                 }
                 echo json_encode($calendarEvents);

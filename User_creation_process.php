@@ -68,8 +68,13 @@ if($stmt = $conn->prepare($sql)) {
     if($stmt->execute()){
         if($Default_list == 1) include 'User_creation_process_default_list.php';
         if($Default_tag == 1) include 'User_creation_process_default_tags.php';
+        include 'User_creation_process_calendar.php';
 
-        header("Location: User_creation.php?created=1");
+        if(isset($_POST['from']) && $_POST['from'] === 'usermenu'){
+            header("Location: User_object/User_menu.php?created=1");
+        } else {
+            header("Location: User_creation.php?created=1");
+        }
         exit();
     } else {
         echo "Error: " . $stmt->error;
