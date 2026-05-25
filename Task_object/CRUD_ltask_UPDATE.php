@@ -1,0 +1,42 @@
+<?php
+session_start();
+
+$servername = "localhost";
+$username   = "admin";
+$password   = "admin";
+$dbname     = "proyecto";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+
+$currentUser = $_SESSION['user'];
+
+$stmt = $conn->prepare("UPDATE tasks SET tittle = ?, description = ?, due_date = ?, tag = ?, list = ?, is_checked = ? WHERE id = ? AND Username = ?");
+if($stmt){
+    $id         = intval($_POST['idA']);
+    $is_checked = intval($_POST['is_checkedA']);
+    $stmt->bind_param("ssssssis",
+        $_POST['tittleA'],
+        $_POST['descriptionA'],
+        $_POST['due_dateA'],
+        $_POST['tagA'],
+        $_POST['listA'],
+        $is_checked,
+        $id,
+        $currentUser
+    );
+    $stmt->execute();
+    if($stmt->affected_rows >= 0){
+        $stmt->close();
+        $conn->close();
+        header("Location: Task_update.php?updated=1");
+    } else {
+        $stmt->close();
+        $conn->close();
+        header("Location: Task_update.php?error=notfound");
+    }
+    exit();
+}
+
+$conn->close();
+?>

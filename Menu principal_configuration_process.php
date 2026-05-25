@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 $currentUser = $_SESSION['user'];
 
 $lists = [];
-$stmtLists = $conn->prepare("SELECT name FROM lists WHERE Username = ?");
+$stmtLists = $conn->prepare("SELECT name, icon FROM lists WHERE Username = ?");
 if($stmtLists){
     $stmtLists->bind_param("s", $currentUser);
     $stmtLists->execute();

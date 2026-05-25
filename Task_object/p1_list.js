@@ -108,28 +108,3 @@ function irPantallaCRUD_Usuario() {
 function irPantallaMain() {
 	window.location.href = 'Pantalla de inicio.php';
 }
-
-function irPantallaUser_Creation() {
-	window.location.href = 'User_creation.php';
-}
-
-
-function irPantalla_Tag_menu() {
-	window.location.href = 'Tag_object/Tag_menu.php';
-}
-
-function irPantalla_Calendar_menu() {
-	window.location.href = 'Calendar_object/Tag_menu.php';
-}
-
-function irPantalla_User_menu() {
-	window.location.href = 'User_object/User_menu.php';
-}
-
-function irPantalla_List_menu() {
-	window.location.href = 'List_object/List_menu.php';
-}
-
-function irPantalla_Task_menu() {
-	window.location.href = 'Task_object/Task_menu.php';
-}
