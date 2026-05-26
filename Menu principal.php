@@ -147,13 +147,26 @@ include 'Menu principal_configuration_process.php';
                     <?php foreach($tasks as $task): ?>
                         <?php $bgColor = isset($tagColors[$task['tag']]) ? $tagColors[$task['tag']] : '#ffffff'; ?>
                         <div class="task-item border rounded p-3 mb-3" data-tag="<?php echo htmlspecialchars($task['tag']); ?>" data-list="<?php echo htmlspecialchars($task['list']); ?>" style="background-color: <?php echo $bgColor; ?>33;">
-                            <strong><?php echo htmlspecialchars($task['tittle']); ?></strong>
-                            <?php if($task['description']): ?>
-                                <p class="mb-1"><?php echo htmlspecialchars($task['description']); ?></p>
-                            <?php endif; ?>
-                            <?php if($task['due_date']): ?>
-                                <small class="text-muted"><?php echo htmlspecialchars($task['due_date']); ?></small>
-                            <?php endif; ?>
+                            <div class="d-flex align-items-start gap-2">
+                                <!-- Checkbox is_checked -->
+                                <input class="form-check-input task-check flex-shrink-0 mt-1" type="checkbox" data-id="<?php echo $task['id']; ?>" <?php if($task['is_checked']): ?>checked<?php endif; ?>>
+                                <!-- Contenido -->
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <strong class="task-content <?php if($task['is_checked']): ?>task-done<?php endif; ?>"><?php echo htmlspecialchars($task['tittle']); ?></strong>
+                                        <?php if($task['due_date']): ?>
+                                            <small class="text-muted text-nowrap ms-2"><?php echo htmlspecialchars($task['due_date']); ?></small>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php if($task['description']): ?>
+                                        <p class="mb-1 text-muted" style="font-size:0.9rem;"><?php echo htmlspecialchars($task['description']); ?></p>
+                                    <?php endif; ?>
+                                    <div class="d-flex gap-2 mt-1">
+                                        <span class="badge" style="background:<?php echo $bgColor; ?>dd; color:#333;"><?php echo htmlspecialchars($task['tag']); ?></span>
+                                        <span class="badge" style="background:#e0e0e0; color:#555;"><?php echo htmlspecialchars($task['list']); ?></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                     <p id="no-coincidencias" class="text-muted" style="display:none;">No hay coincidencias</p>
@@ -209,37 +222,52 @@ include 'Menu principal_configuration_process.php';
 
 
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const tagCheckboxes  = document.querySelectorAll('[id^="tag_"]');
-    const listCheckboxes = document.querySelectorAll('[id^="list_"]');
+$(document).ready(function() {
 
+    // jQuery: filtrar tasks por tag y lista con checkboxes
     function filterTasks() {
-        const selectedTags  = Array.from(tagCheckboxes).filter(cb => cb.checked).map(cb => cb.id.replace('tag_', ''));
-        const selectedLists = Array.from(listCheckboxes).filter(cb => cb.checked).map(cb => cb.id.replace('list_', ''));
+        const selectedTags  = $('[id^="tag_"]:checked').map(function()  { return $(this).attr('id').replace('tag_',  ''); }).get();
+        const selectedLists = $('[id^="list_"]:checked').map(function() { return $(this).attr('id').replace('list_', ''); }).get();
 
         let visible = 0;
 
-        document.querySelectorAll('.task-item').forEach(function(task) {
-            const matchesTag  = selectedTags.length  === 0 || selectedTags.includes(task.dataset.tag);
-            const matchesList = selectedLists.length === 0 || selectedLists.includes(task.dataset.list);
+        // jQuery: iterar task-items y mostrar/ocultar con toggle
+        $('.task-item').each(function() {
+            const taskTag  = $(this).data('tag');
+            const taskList = $(this).data('list');
+            const matchesTag  = $.inArray(taskTag,  selectedTags)  !== -1;
+            const matchesList = $.inArray(taskList, selectedLists) !== -1;
 
             if(matchesTag && matchesList) {
-                task.style.display = '';
+                $(this).removeClass('d-none').addClass('d-flex');
                 visible++;
             } else {
-                task.style.display = 'none';
+                $(this).removeClass('d-flex').addClass('d-none');
             }
         });
 
-        const noCoincidencias = document.getElementById('no-coincidencias');
-        if(noCoincidencias) {
-            noCoincidencias.style.display = visible === 0 ? '' : 'none';
+        // jQuery: mostrar/ocultar mensaje vacío con fadeIn/fadeOut
+        if(visible === 0) {
+            $('#no-coincidencias').fadeIn(150);
+        } else {
+            $('#no-coincidencias').fadeOut(150);
         }
     }
 
-    tagCheckboxes.forEach(cb  => cb.addEventListener('change', filterTasks));
-    listCheckboxes.forEach(cb => cb.addEventListener('change', filterTasks));
+    // jQuery: escuchar cambios en checkboxes
+    $('[id^="tag_"], [id^="list_"]').on('change', filterTasks);
+    filterTasks();
+
+    // jQuery: toggle is_checked con $.post
+    $('.task-check').on('change', function() {
+        const id         = $(this).data('id');
+        const is_checked = $(this).is(':checked') ? 1 : 0;
+        $(this).closest('.task-item').find('.task-content').toggleClass('task-done', $(this).is(':checked'));
+        $.post('Task_check_process.php', { id: id, is_checked: is_checked });
+    });
+
 });
 </script>
 

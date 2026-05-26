@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+if(!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
+    header("Location: ../Pantalla de inicio.php"); exit;
+}
+
 $servername = "localhost";
 $username   = "admin";
 $password   = "admin";
@@ -17,6 +21,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../p1.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../p1.js"></script>
 </head>
 

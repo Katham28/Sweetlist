@@ -1,4 +1,9 @@
-<?php session_start(); ?>
+<?php
+session_start();
+if(!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
+    header("Location: ../Pantalla de inicio.php"); exit;
+}
+?>
 <!doctype html>
 <html>
 <head>

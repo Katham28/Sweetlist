@@ -114,6 +114,14 @@ function irPantallaUser_Creation() {
 }
 
 
+// jQuery: mostrar una sección y ocultar las demás (usado en todos los menús CRUD)
+function showSection(sectionId, allSections) {
+    $.each(allSections, function(i, id) {
+        $('#' + id).hide();
+    });
+    $('#' + sectionId).fadeIn(200);
+}
+
 function irPantalla_Tag_menu() {
 	window.location.href = 'Tag_object/Tag_menu.php';
 }
