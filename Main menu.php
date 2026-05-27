@@ -1,21 +1,21 @@
-<?php
+﻿<?php
 session_start();
 
 if (isset($_SESSION["authenticated"])) {
     if ($_SESSION["authenticated"] != true) {
         $_SESSION["LoginError"] = true;
-        header("Location: Pantalla de inicio.php");
+        header("Location: Main page.php");
         exit;
     }
 } else {
     $_SESSION["LoginError"] = true;
-    header("Location: Pantalla de inicio.php");
+    header("Location: Main page.php");
     exit;
 }
 
 $_SESSION["LoginError"] = false;
 
-include 'Menu principal_configuration_process.php';
+include 'Main menu_configuration_process.php';
 ?>
 
 <!doctype html>

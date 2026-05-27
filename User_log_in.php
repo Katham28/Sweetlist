@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 session_start();
 
@@ -43,19 +43,19 @@ if(isset($_POST["usernameA"]) && isset($_POST["passwordA"])){
           $_SESSION['authenticated'] = true;
 		  $_SESSION['LoginError'] = false;
 
-          header("Location: Menu principal.php");
+          header("Location: Main menu.php");
           exit();
 
         } else {
            $_SESSION['LoginError'] = true;
-		  header("Location: Pantalla de inicio.php");
+		  header("Location: Main page.php");
 		  		 
           exit();
         }
 
       } else {
 		  		$_SESSION['LoginError'] = true;
-        header("Location: Pantalla de inicio.php");
+        header("Location: Main page.php");
 		  
         exit();
       }

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Pantalla de inicio</title>
+    <title>Main page</title>
     <link rel="stylesheet" href="p1.css">
     <script src="p1.js"></script>
 

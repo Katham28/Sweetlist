@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 session_start();
 
 if(!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
-    header("Location: ../Pantalla de inicio.php"); exit;
+    header("Location: ../Main page.php"); exit;
 }
 
 $servername = "localhost";
@@ -29,7 +29,7 @@ if($stmt){
         $stmt->close();
         $conn->close();
         if(isset($_POST['from']) && $_POST['from'] === 'main'){
-            header("Location: ../Menu%20principal.php?task_created=1");
+            header("Location: ../Main%20menu.php?task_created=1");
         } else {
             header("Location: Task_create.php?created=1");
         }

@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 session_start();
 if(!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
-    header("Location: ../Pantalla de inicio.php"); exit;
+    header("Location: ../Main page.php"); exit;
 }
 ?>
 <!doctype html>

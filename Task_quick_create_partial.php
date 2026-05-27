@@ -1,5 +1,5 @@
-<?php
-// Partial: usa $tags y $lists ya cargados por Menu principal_configuration_process.php
+﻿<?php
+// Partial: usa $tags y $lists ya cargados por Main menu_configuration_process.php
 ?>
 <hr>
 <h5>Quick Add Task</h5>

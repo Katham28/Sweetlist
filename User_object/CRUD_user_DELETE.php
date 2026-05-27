@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 session_start();
 
 if(!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
-    header("Location: ../Pantalla de inicio.php"); exit;
+    header("Location: ../Main page.php"); exit;
 }
 
 $servername = "localhost";
@@ -21,7 +21,7 @@ if($stmt){
         $stmt->close();
         $conn->close();
         session_destroy();
-        header("Location: ../Pantalla de inicio.php");
+        header("Location: ../Main page.php");
     } else {
         $stmt->close();
         $conn->close();

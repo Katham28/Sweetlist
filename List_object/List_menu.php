@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 session_start();
 
 if(!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
-    header("Location: ../Pantalla de inicio.php"); exit;
+    header("Location: ../Main page.php"); exit;
 }
 
 $servername = "localhost";
@@ -36,7 +36,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="window.location.href='../Menu%20principal.php'">Main Menu</a>
+                    <a class="nav-link" href="#" onclick="window.location.href='../Main%20menu.php'">Main Menu</a>
                 </li>
             </ul>
         </div>

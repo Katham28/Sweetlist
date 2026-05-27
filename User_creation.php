@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="irPantallaMain()">Pantalla de inicio</a>
+                    <a class="nav-link" href="#" onclick="irPantallaMain()">Main page</a>
                 </li>
             </ul>
         </div>

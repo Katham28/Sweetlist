@@ -1,4 +1,4 @@
-function Other(show){
+﻿function Other(show){
     let container = document.getElementById("otherContainer");
 
     if(show){
@@ -106,5 +106,5 @@ function irPantallaCRUD_Usuario() {
 }
 
 function irPantallaMain() {
-	window.location.href = 'Pantalla de inicio.php';
+	window.location.href = 'Main page.php';
 }
