@@ -41,11 +41,11 @@ if(!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
 
             Icon:
             <select name="iconA" class="form-control">
-                <option value="home.png">🏠 Home</option>
-                <option value="list.png">📋 List</option>
-                <option value="shopping.png">🛒 Shopping</option>
-                <option value="study.png">📚 Study</option>
-                <option value="work.png">💼 Work</option>
+                <option value="home.png">Home</option>
+                <option value="list.png">List</option>
+                <option value="shopping.png">Shopping</option>
+                <option value="study.png"> Study</option>
+                <option value="work.png"> Work</option>
             </select>
 
             Notes:
